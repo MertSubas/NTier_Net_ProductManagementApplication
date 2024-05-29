@@ -1,0 +1,182 @@
+﻿@using Newtonsoft.Json;
+@using ProductManagement.Business.Models.ResponseModels;
+
+@{
+	Layout = null;
+	var user = Context.Session.GetString("User");
+	var userModel = JsonConvert.DeserializeObject<LoginResponse>(user);
+}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="~/css/site.css" rel="stylesheet" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - ProductManagement.Web</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/ProductManagement.Web.styles.css" asp-append-version="true" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+    <title>Sidebar template</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+	<style>
+		.layout {
+			min-height: 87vh;
+		}
+	</style>
+</head>
+<body>
+	<!--Main Navigation-->
+    <body>
+        <div class="page-wrapper chiller-theme toggled" >
+            <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+                <i class="fas fa-bars"></i>
+            </a>
+            <nav id="sidebar" class="sidebar-wrapper" style="border-radius: 25px;margin-left: -6px;">
+                <div class="sidebar-content">
+                    <div class="sidebar-header">
+
+                    </div>
+                    <!-- sidebar-header  -->
+                    <div class="sidebar-search" style="display: flex;justify-content: space-around;font-size: 26px;">
+                        <h3 style="maring-right:6px;">Product Management </h3>
+                    </div>
+                    <!-- sidebar-search  -->
+                    <div class="sidebar-menu">
+                        <ul>
+                            <li>
+                                <a href="@Url.Action("Index","Home")">
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            @if (userModel.Roles.Contains("Manager"))
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index", "Company")">
+                                        <span>Company</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "User")">
+                                        <span>User</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Category")">
+                                        <span>Category</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Product")">
+                                        <span>Product</span>
+                                    </a>
+                                </li>
+                            }
+                            <li>
+                                <a href="@Url.Action("Index", "Order")">
+                                    <span>Order</span>
+                                </a>
+                            </li>
+                            
+                            @if (userModel.Roles.Contains("Seller"))
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index", "Product")">
+                                        <span>Product</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Category")">
+                                        <span>Category</span>
+                                    </a>
+                                </li>
+                            }
+                            <li style="background-color:red">
+                                <a href="@Url.Action("Index", "Login")">
+                                    <span>Log Out</span>
+                                </a>
+                            </li>
+                        
+                           
+                        </ul>
+                    </div>
+                    <!-- sidebar-menu  -->
+                </div>
+                <!-- sidebar-content  -->
+            </nav>
+            <!-- sidebar-wrapper  -->
+            <main class="page-content">
+
+               
+                    @RenderBody()
+            
+            </main>
+            <!-- page-content" -->
+        </div>
+        <!-- page-wrapper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+
+    </body>
+	<!--Main Navigation-->
+	<!--Main layout-->
+	<!--Main layout-->
+
+
+
+
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
+	<script>
+		jQuery(function ($) {
+
+			$(".sidebar-dropdown > a").click(function () {
+				$(".sidebar-submenu").slideUp(200);
+				if (
+					$(this)
+						.parent()
+						.hasClass("active")
+				) {
+					$(".sidebar-dropdown").removeClass("active");
+					$(this)
+						.parent()
+						.removeClass("active");
+				} else {
+					$(".sidebar-dropdown").removeClass("active");
+					$(this)
+						.next(".sidebar-submenu")
+						.slideDown(200);
+					$(this)
+						.parent()
+						.addClass("active");
+				}
+			});
+
+			$("#close-sidebar").click(function () {
+				$(".page-wrapper").removeClass("toggled");
+			});
+			$("#show-sidebar").click(function () {
+				$(".page-wrapper").addClass("toggled");
+			});
+
+
+
+
+		});</script>
+</body>
+</html>
+
